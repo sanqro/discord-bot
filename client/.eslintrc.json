@@ -3,40 +3,24 @@
         "es2021": true,
         "node": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:prettier/recommended"
-    ],
-    "overrides": [
-    ],
+    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+    "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
         "prettier/prettier": [
             "error",
             {
-                "endOfLine": "crlf",
+                "endOfLine": "lf",
                 "semi": true,
                 "tabWidth": 4
             }
         ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+        "quotes": ["error", "double"],
+        "semi": ["error", "always"]
     }
 }
