@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint-fix": "eslint --fix . --ext .js"
+    "lint-fix": "eslint --fix . --ext .js",
+    "dev": "npx nodemon --watch . index.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +19,15 @@
     "url": "https://github.com/sanqro/discord-bot/issues"
   },
   "homepage": "https://github.com/sanqro/discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
   "devDependencies": {
     "eslint": "^8.32.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.3"
+    "prettier": "^2.8.3",
+    "nodemon": "^2.0.20"
   }
 }
