@@ -6,5 +6,5 @@ export default {
         .setDescription("Replies with pong if the bot is online."),
     async execute(interaction) {
         await interaction.reply("Pong!");
-    },
+    }
 };

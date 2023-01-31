@@ -9,6 +9,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 // import command files
 client.commands = new Collection();
 
+// eslint-disable-next-line no-unused-vars
 for (const [key, value] of Object.entries(commandsLib)) {
     if ("data" in value && "execute" in value) {
         client.commands.set(value.data.name, value);
@@ -30,9 +31,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     const command = interaction.client.commands.get(interaction.commandName);
 
     if (!command) {
-        console.error(
-            `No command matching ${interaction.commandName} was found.`
-        );
+        console.error(`No command matching ${interaction.commandName} was found.`);
         return;
     }
 
@@ -42,7 +41,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         console.error(error);
         await interaction.reply({
             content: "There was an error while executing this command!",
-            ephemeral: true,
+            ephemeral: true
         });
     }
 });
