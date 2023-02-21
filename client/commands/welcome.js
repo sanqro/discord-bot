@@ -12,6 +12,6 @@ export default {
         ),
     async execute(interaction) {
         const target = interaction.options.getUser("target");
-        await interaction.reply(`Welcome ${target.username}`);
+        await interaction.reply(`Welcome ${target.username} to the server!`);
     }
 };
