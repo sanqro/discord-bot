@@ -55,7 +55,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     } catch (error) {
         console.error(error);
         await interaction.reply({
-            content: "There was an error while executing this command!",
+            content: "Beim Ausführen dieses Befehls ist ein Fehler aufgetreten.",
             ephemeral: true
         });
     }
@@ -66,7 +66,7 @@ const antiSpam = new AntiSpam({
     muteThreshold: 100000000,
     kickThreshold: 100000000,
     banThreshold: 100000000,
-    warnMessage: "Stop spamming!",
+    warnMessage: "Hör auf zu spammen!",
     verbose: true
 });
 
