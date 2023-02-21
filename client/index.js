@@ -72,7 +72,7 @@ const antiSpam = new AntiSpam({
 client.on("messageCreate", (message) =>
     antiSpam.message(message).then((bool) => {
         if (bool) {
-            warn(message.author.id, "spam");
+            warn(`<@${message.author.id}>`, "Spam");
         }
     })
 );
