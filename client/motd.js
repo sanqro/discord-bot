@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 import { EmbedBuilder } from "@discordjs/builders";
 
 function motd(client) {
-    cron.schedule("*/5 * * * * *", async () => {
+    cron.schedule("0 0 8 * * *", async () => {
         try {
             const fact = await getFact();
             const channel = client.channels.cache.get("1077507634862772314");
