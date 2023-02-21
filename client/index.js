@@ -64,6 +64,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 const antiSpam = new AntiSpam({
     warnThreshold: 3,
     muteThreshold: 100000000,
+    kickThreshold: 100000000,
     banThreshold: 100000000,
     warnMessage: "Stop spamming!",
     verbose: true

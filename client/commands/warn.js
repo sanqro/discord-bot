@@ -47,6 +47,13 @@ export default {
         // save warning data do the database
         await warning.save();
 
-        await interaction.reply(`Warned ${target.username} for: ${reason}`);
+        const warningsAmount = async (target_id) => {
+            return await Warning.find({ target: target_id }).exec();
+        };
+
+        console.log(await warningsAmount());
+
+        await interaction.reply(`Warned ${target.username} for: ${reason}
+        This is warning #${(await warningsAmount(target)).length} for ${target.username}`);
     }
 };
