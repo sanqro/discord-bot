@@ -1,10 +1,25 @@
 import * as commandsLib from "./commands/index.js";
-import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
+import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
 import * as dotenv from "dotenv";
+import AntiSpam from "discord-anti-spam";
+import mongoose from "mongoose";
+import { Warning } from "./commands/warn.js";
 dotenv.config();
 
+// The following code for mongoose was sourced from this url:
+// https://www.geeksforgeeks.org/how-to-connect-node-js-to-a-mongodb-database/
+
+mongoose.set("strictQuery", false);
+mongoose.connect("mongodb://localhost:27017/discordbot", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
 // create new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+    partials: [Partials.Channel]
+});
 
 // import command files
 client.commands = new Collection();
@@ -45,6 +60,32 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
     }
 });
+
+const antiSpam = new AntiSpam({
+    warnThreshold: 3,
+    muteThreshold: 100000000,
+    banThreshold: 100000000,
+    warnMessage: "Stop spamming!",
+    verbose: true
+});
+
+client.on("messageCreate", (message) =>
+    antiSpam.message(message).then((bool) => {
+        if (bool) {
+            warn(message.author.id, "spam");
+        }
+    })
+);
+
+const warn = async (target, reason) => {
+    const warning = new Warning({
+        target,
+        reason
+    });
+
+    // save warning data do the database
+    await warning.save();
+};
 
 // log in with bot client's token
 client.login(process.env.TOKEN);

@@ -10,12 +10,13 @@ mongoose.connect("mongodb://localhost:27017/discordbot", {
     useUnifiedTopology: true
 });
 
-const warningSchema = {
+const Schema = mongoose.Schema;
+const warningSchema = new Schema({
     target: String,
     reason: String
-};
+});
 
-const Warning = mongoose.model("warnings", warningSchema);
+export const Warning = mongoose.model("warnings", warningSchema);
 
 export default {
     data: new SlashCommandBuilder()
