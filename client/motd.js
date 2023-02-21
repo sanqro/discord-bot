@@ -1,11 +1,17 @@
 import cron from "node-cron";
 import fetch from "node-fetch";
+import { EmbedBuilder } from "@discordjs/builders";
 
 function motd(client) {
     cron.schedule("*/5 * * * * *", async () => {
-        const fact = await getFact();
-        const channel = client.channels.cache.get("1077507634862772314");
-        channel.send(fact);
+        try {
+            const fact = await getFact();
+            const channel = client.channels.cache.get("1077507634862772314");
+            const embed = createEmbed(fact.text, fact.source, fact.source_url);
+            channel.send(embed);
+        } catch (error) {
+            console.error(error);
+        }
     });
     console.log("Successfully scheduled MOTD.");
 }
@@ -19,11 +25,23 @@ async function getFact() {
             }
         });
         const factJson = await fact.json();
-        return factJson.text;
+        return factJson;
     } catch (error) {
-        console.log("error");
         console.log(error.message);
     }
+}
+
+function createEmbed(text, source, url) {
+    const embed = new EmbedBuilder()
+        .setColor(0xc8f542)
+        .setTitle("Message of the Day!")
+        .setURL(url)
+        .setDescription("MOTD")
+        .addFields({ name: "Useless fact of today:", value: text })
+        .setTimestamp()
+        .setFooter({ text: "Source: " + source, iconURL: null });
+
+    return { embeds: [embed] };
 }
 
 export default motd;
