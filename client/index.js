@@ -1,4 +1,5 @@
 import * as commandsLib from "./commands/index.js";
+import motd from "./motd.js";
 import { Client, Collection, Events, GatewayIntentBits, Partials } from "discord.js";
 import * as dotenv from "dotenv";
 import AntiSpam from "discord-anti-spam";
@@ -38,6 +39,7 @@ for (const [key, value] of Object.entries(commandsLib)) {
 // code to run as soon as client is ready
 client.once(Events.ClientReady, (e) => {
     console.log("Logged in as: " + e.user.tag);
+    motd(client); // schedules message of the day
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
