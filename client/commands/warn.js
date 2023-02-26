@@ -10,33 +10,38 @@ mongoose.connect("mongodb://localhost:27017/discordbot", {
     useUnifiedTopology: true
 });
 
-const warningSchema = {
+const Schema = mongoose.Schema;
+const warningSchema = new Schema({
     target: String,
     reason: String
-};
+});
 
-const Warning = mongoose.model("warnings", warningSchema);
+export const Warning = mongoose.model("warnings", warningSchema);
 
 export default {
     data: new SlashCommandBuilder()
         .setName("warn")
-        .setDescription("Warns  the user you enter as a target")
+        .setDescription(
+            "Warnt den Nutzer, den du als Ziel eingibst und fügt einen optionalen Grunde hinzu"
+        )
         .addUserOption((option) =>
             option
                 .setName("target")
-                .setDescription("Warns the user you enter as a target")
+                .setDescription("Warnt den Nutzer, den du als Ziel eingibst")
                 .setRequired(true)
         )
         .addStringOption((option) =>
             option
                 .setName("reason")
-                .setDescription("You can optionally provide a reason for the warn here.")
+                .setDescription(
+                    "Du kannst dieses Feld optional für einen Grundangabe für die Warnung verwenden"
+                )
                 .setRequired(false)
         )
         .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers),
     async execute(interaction) {
         const target = interaction.options.getUser("target");
-        const reason = interaction.options.getString("reason") ?? "No reason specified.";
+        const reason = interaction.options.getString("reason") ?? "Kein Grund wurde festgelegt.";
 
         const warning = new Warning({
             target,
@@ -46,6 +51,13 @@ export default {
         // save warning data do the database
         await warning.save();
 
-        await interaction.reply(`Warned ${target.username} for: ${reason}`);
+        const warningsAmount = async (target_id) => {
+            return await Warning.find({ target: target_id }).exec();
+        };
+
+        console.log(await warningsAmount());
+
+        await interaction.reply(`${target.username} wurde gewarnt für: ${reason}
+        Dies ist Warnung #${(await warningsAmount(target)).length} für ${target.username}`);
     }
 };
