@@ -3,15 +3,15 @@ import { SlashCommandBuilder } from "discord.js";
 export default {
     data: new SlashCommandBuilder()
         .setName("welcome")
-        .setDescription("Welcomes a user")
+        .setDescription("Heisst einen Benutzer willkommen")
         .addUserOption((option) =>
             option
                 .setName("target")
-                .setDescription("Welcomes the user you enter as a target")
+                .setDescription("Heisst einen Benutzer willkommen, den du angibst")
                 .setRequired(true)
         ),
     async execute(interaction) {
         const target = interaction.options.getUser("target");
-        await interaction.reply(`Welcome ${target.username} to the server!`);
+        await interaction.reply(`Wilkommen ${target.username}!`);
     }
 };
