@@ -1,3 +1,6 @@
+// This code was MOSTLY sourced from the following page of the Discord.js guide:
+// https://discordjs.guide/creating-your-bot/command-deployment.html#guild-commands
+
 import { REST, Routes } from "discord.js";
 import * as commandsLib from "./commands/index.js";
 import * as dotenv from "dotenv";

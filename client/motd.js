@@ -1,8 +1,9 @@
 import cron from "node-cron";
-import fetch from "node-fetch";
+import fetch from "node-fetch"; // for older versions of node.js
 import { EmbedBuilder } from "@discordjs/builders";
 
 function motd(client) {
+    //            "s m h d M y"
     cron.schedule("0 0 8 * * *", async () => {
         try {
             const fact = await getFact();
