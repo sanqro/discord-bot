@@ -10,6 +10,10 @@ dotenv.config();
 // The following code for mongoose was sourced from this url:
 // https://www.geeksforgeeks.org/how-to-connect-node-js-to-a-mongodb-database/
 
+// Some of the code for setting up the application was sourced from
+// different parts of the Discord.js guide and documentation:
+// https://discordjs.guide/#before-you-begin
+
 mongoose.set("strictQuery", false);
 mongoose.connect("mongodb://localhost:27017/discordbot", {
     useNewUrlParser: true,

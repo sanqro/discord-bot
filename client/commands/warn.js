@@ -4,12 +4,14 @@ import mongoose from "mongoose";
 // The following code for mongoose was sourced from this url:
 // https://www.geeksforgeeks.org/how-to-connect-node-js-to-a-mongodb-database/
 
+// establish connection
 mongoose.set("strictQuery", false);
 mongoose.connect("mongodb://localhost:27017/discordbot", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
+// define a schema and model for warnings
 const Schema = mongoose.Schema;
 const warningSchema = new Schema({
     target: String,
@@ -18,6 +20,7 @@ const warningSchema = new Schema({
 
 export const Warning = mongoose.model("warnings", warningSchema);
 
+// export the actual command object
 export default {
     data: new SlashCommandBuilder()
         .setName("warn")
@@ -51,13 +54,18 @@ export default {
         // save warning data do the database
         await warning.save();
 
+        // query the warnings of the target
         const warningsAmount = async (target_id) => {
             return await Warning.find({ target: target_id }).exec();
         };
 
-        console.log(await warningsAmount());
-
-        await interaction.reply(`${target.username} wurde gewarnt für: ${reason}
-        Dies ist Warnung #${(await warningsAmount(target)).length} für ${target.username}`);
+        // reply with reason and number of warnings
+        await interaction.reply(
+            `${target.username} wurde gewarnt für: ${reason}\nDies ist Warnung #${
+                (
+                    await warningsAmount(target)
+                ).length
+            } für ${target.username}`
+        );
     }
 };
