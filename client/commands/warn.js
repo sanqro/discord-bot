@@ -55,8 +55,6 @@ export default {
             return await Warning.find({ target: target_id }).exec();
         };
 
-        console.log(await warningsAmount());
-
         await interaction.reply(`${target.username} wurde gewarnt für: ${reason}
         Dies ist Warnung #${(await warningsAmount(target)).length} für ${target.username}`);
     }
